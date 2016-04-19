@@ -44,7 +44,7 @@ module.exports = function () {
             method: 'GET',
             path:'/',
             handler: function (request, reply) {
-                reply.redirect(process.env.HOST + '/browser/index.html#'+process.env.HOST + '/api');
+                return reply.redirect(process.env.HOST + '/browser/index.html#'+process.env.HOST + '/api');
             }
         });
 
@@ -86,10 +86,10 @@ module.exports = function () {
                         source: 'https://farm'+photo.farm+'.staticflickr.com/'+photo.server+'/'+photo.id+'_'+photo.secret+'.jpg'
                     }, process.env.HOST + '/api/image/'+request.params.id);
 
-                    reply(photoResource);
+                    return reply(photoResource);
                 })
                 .catch(function(err) {
-                    reply(Boom.create(500, 'Unexpected error'));
+                    return reply(Boom.create(500, 'Unexpected error'));
                 });
 
             }
@@ -100,6 +100,11 @@ module.exports = function () {
             path: '/api/search_term',
             handler: function (request, reply) {
 
+                var text = request.query.text;
+                if (!text) {
+                    return reply(Boom.badRequest('The text to search is required'));
+                }
+
                 var pageNumber = request.query.pageNumber;
                 if (!pageNumber || pageNumber == 0) {
                     pageNumber = CONSTANTS.PHOTO_SEARCH_DEFAULTS.PAGE_NUMBER;
@@ -108,7 +113,6 @@ module.exports = function () {
                 if (!pageSize) {
                     pageSize = CONSTANTS.PHOTO_SEARCH_DEFAULTS.PAGE_SIZE;
                 }
-                var text = request.query.text;
 
                 var Flickr = require("flickrapi"),
                     flickrOptions = {
@@ -163,14 +167,14 @@ module.exports = function () {
                         });
                         pageResource.embed("photos", photoResources);
 
-                        reply(pageResource);
+                        return reply(pageResource);
                     } else {
-                        reply(Boom.create(500, 'Flick API response ' + statusCode));
+                        return reply(Boom.create(500, 'Flick API response ' + statusCode));
                     }
 
                 })
                 .catch(function(err) {
-                    reply(Boom.create(500, 'Unexpected error'));
+                    return reply(Boom.create(500, 'Unexpected error'));
                 });
             }
         });

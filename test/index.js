@@ -9,6 +9,16 @@ describe('Search by term', function() {
 
     this.timeout(5000);
 
+    it("should fail when no text parameter is specified",function(done){
+        server
+            .get("/api/search_term")
+            .expect("Content-type",/json/)
+            .end(function(err,res) {
+                expect(res.status).to.equal(400);
+                done();
+            });
+    });
+
     it("should find photos",function(done){
         server
             .get("/api/search_term?text=sea&pageNumber=1&pageSize=5")
