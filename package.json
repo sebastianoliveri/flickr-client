@@ -1,0 +1,33 @@
+{
+  "name": "flickr-client",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sebastianoliveri/flickr-client.git"
+  },
+  "author": "Sebastian Oliveri",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sebastianoliveri/flickr-client/issues"
+  },
+  "homepage": "https://github.com/sebastianoliveri/flickr-client#readme",
+  "dependencies": {
+    "bluebird": "^3.3.5",
+    "boom": "^3.1.2",
+    "flickrapi": "^0.4.2",
+    "hal": "^0.1.0",
+    "hapi": "^13.3.0",
+    "inert": "^3.2.0",
+    "lodash": "^4.11.1"
+  },
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "mocha": "^2.4.5",
+    "supertest": "^1.2.0"
+  }
+}
